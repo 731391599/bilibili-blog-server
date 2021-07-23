@@ -1,4 +1,5 @@
 const Controller = require('egg').Controller
+'use strict'
 /**
  * @Controller Captcha
  */

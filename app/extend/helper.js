@@ -9,6 +9,7 @@ module.exports = {
 		if (data) {
 			body.data = data
 		}
+		this.ctx.status = 200
 		this.ctx.body = body
 	},
 	// 处理错误

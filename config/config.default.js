@@ -2,6 +2,7 @@
 
 'use strict'
 const CryptoJS = require('crypto-js')
+const path = require('path')
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -25,9 +26,9 @@ module.exports = appInfo => {
 			if (
 				url.startsWith('/admin/captcha') ||
 				url.startsWith('/admin/login') ||
-				url.startsWith('/admin/register') || 
-				url.startsWith('/favicon-32x32') || 
-				url.startsWith('/swagger') 
+				url.startsWith('/admin/register') ||
+				url.startsWith('/favicon-32x32') ||
+				url.startsWith('/swagger')
 			) {
 				return false
 			} else {
@@ -79,6 +80,16 @@ module.exports = appInfo => {
 		// enableValidate: true,
 		routerMap: false,
 		enable: true,
+	}
+
+	// 静态文件
+	config.static = {
+		prefix: '/public',
+		dir: path.join(appInfo.baseDir, 'app/public'),
+		dynamic: true, // 如果当前访问的静态资源没有缓存，则缓存静态文件
+		preload: false,
+		maxAge: 30000000,
+		buffer: true,
 	}
 
 	return {

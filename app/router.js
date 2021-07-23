@@ -9,6 +9,11 @@ module.exports = app => {
 	router.post('/admin/register', controller.register.index)
 	router.post('/admin/login', controller.login.index)
 	router.get('/admin/captcha', controller.captcha.index)
+	router.post('/admin/upload/img', controller.upload.uploadImg)
+	router.get('/admin/province', controller.region.province)
+	router.get('/admin/city/:id', controller.region.city)
+	router.get('/admin/area/:id', controller.region.area)
 
 	router.resources('userInfo', '/admin/userInfo', controller.userInfo)
+	router.resources('user', '/admin/user', controller.user)
 }

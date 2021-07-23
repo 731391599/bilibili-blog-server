@@ -1,4 +1,4 @@
-const Service = require('egg').Service
+const { Service } = require('egg')
 
 class RegisterService extends Service {
 	constructor(ctx) {

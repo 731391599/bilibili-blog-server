@@ -4,7 +4,10 @@ module.exports = opt => {
 		const token = ctx.request.header.authorization // 请求头中的token
 		if (token) {
 			try {
-				let decode = ctx.app.jwt.verify(token, ctx.app.config.jwt.secret)
+				let decode = ctx.app.jwt.verify(
+					token,
+					ctx.app.config.jwt.secret
+				)
 				ctx.decode = decode
 				await next()
 			} catch (e) {
