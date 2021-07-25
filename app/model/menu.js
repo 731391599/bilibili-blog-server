@@ -21,9 +21,15 @@ module.exports = app => {
 			type: INTEGER,
 			field: '_pid',
 		},
+		redirect: {
+			type: STRING,
+			field: '_redirect',
+		},
 		roleLevel: STRING,
 		createdAt: DATE,
 		updatedAt: DATE,
 	})
+
+    
 	return Menu
 }

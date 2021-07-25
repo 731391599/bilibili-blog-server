@@ -65,4 +65,27 @@ module.exports = {
 			expiresIn: '7d', // 设置时效 后面会该短 根据请求更新时效
 		})
 	},
+
+	toTree(arr) {
+		const parent = [],
+			children = []
+
+		arr.forEach(item => {
+			// 不存在pid 则为父及
+			if (!item.pid) {
+				item.children = []
+				parent.push(item)
+			} else {
+				children.push(item)
+			}
+		})
+		for (let i = 0; i < children.length; i++) {
+			for (let j = 0; j < parent.length; j++) {
+				if (children[i].pid === parent[j].id) {
+					parent[j].children.push(children[i])
+				}
+			}
+		}
+		return parent
+	},
 }
