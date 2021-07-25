@@ -22,6 +22,11 @@ class UserInfoService extends Service {
 		const { ctx } = this
 		try {
 			const data = await ctx.model.UserInfo.findOne({
+				include: [
+					{
+						model: ctx.model.Role,
+					},
+				],
 				where: {
 					userId: id,
 				},
@@ -36,6 +41,7 @@ class UserInfoService extends Service {
 			}
 			return body
 		} catch (e) {
+			console.log(e)
 			body.status = '服务端错误'
 		}
 	}

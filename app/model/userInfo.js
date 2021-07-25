@@ -26,5 +26,12 @@ module.exports = app => {
 		updatedAt: DATE,
 	})
 
+	UserInfo.associate = function () {
+		app.model.UserInfo.belongsTo(app.model.Role, {
+			targetKey: 'id',
+			foreignKey: 'roleId',
+		})
+	}
+
 	return UserInfo
 }
