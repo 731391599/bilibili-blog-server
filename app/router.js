@@ -18,4 +18,5 @@ module.exports = app => {
 	router.resources('userInfo', '/admin/userInfo', controller.userInfo)
 	router.resources('user', '/admin/user', controller.user)
 	router.resources('menu', '/admin/menu', controller.menu)
+	router.resources('category', '/admin/category', controller.category)
 }
