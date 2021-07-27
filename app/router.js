@@ -15,8 +15,13 @@ module.exports = app => {
 	router.get('/admin/area/:id', controller.region.area)
 	router.get('/admin/route', controller.menu.route)
 
+	router.get('/admin/article/all', controller.article.all)
+	router.post('/admin/article/audit/:id', controller.article.audit)
+	router.post('/admin/article/publish/:id', controller.article.publish)
+
 	router.resources('userInfo', '/admin/userInfo', controller.userInfo)
 	router.resources('user', '/admin/user', controller.user)
 	router.resources('menu', '/admin/menu', controller.menu)
 	router.resources('category', '/admin/category', controller.category)
+	router.resources('article', '/admin/article', controller.article)
 }
