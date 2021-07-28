@@ -167,6 +167,25 @@ class ArticleController extends Controller {
 			ctx.helper.error(e)
 		}
 	}
+	// 用户去审核
+	async toAudit() {
+		const { ctx } = this
+		try {
+			ctx.validate(statusRule, ctx.request.body)
+			const { id } = ctx.params
+			const status = await ctx.service.article.toAudit(
+				id,
+				ctx.request.body
+			)
+			if (status === 'success') {
+				ctx.helper.success()
+			} else {
+				ctx.helper.error(status)
+			}
+		} catch (e) {
+			ctx.helper.error(e)
+		}
+	}
 	// 用户审核通过后发布
 	async publish() {
 		const { ctx } = this

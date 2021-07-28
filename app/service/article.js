@@ -169,31 +169,65 @@ class ArticleService extends Service {
 			console.log(e)
 		}
 	}
+	async toAudit(id, body) {
+		const { ctx } = this
+		try {
+			if (body.status) {
+				body.status = 1
+			} else {
+				body.status = 0
+			}
+
+			const { status } = await ctx.model.Article.findOne({
+				where: {
+					id,
+				},
+			})
+			if (status === 1 || status === 0) {
+				await ctx.model.Article.update(
+					{ ...body },
+					{
+						where: {
+							id,
+						},
+					}
+				)
+				return 'success'
+			} else {
+				return '文章状态错误'
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
 	async publish(id, body) {
 		const { ctx } = this
 		try {
 			if (body.status) {
 				body.status = 4
-
-				const { status } = await ctx.model.Article.findOne({
-					where: {
-						id,
-					},
-				})
-				if (status === 2) {
-					await ctx.model.Article.update(
-						{ ...body },
-						{
-							where: {
-								id,
-							},
-						}
-					)
-					return 'success'
-				}
+			} else {
+				body.status = 0
 			}
-			return '文章状态错误'
+
+			const { status } = await ctx.model.Article.findOne({
+				where: {
+					id,
+				},
+			})
+			if (status === 2 || status === 4) {
+				await ctx.model.Article.update(
+					{ ...body },
+					{
+						where: {
+							id,
+						},
+					}
+				)
+				return 'success'
+			} else {
+				return '文章状态错误'
+			}
 		} catch (e) {
 			console.log(e)
 		}

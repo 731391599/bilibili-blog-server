@@ -26,6 +26,14 @@ const createRule = {
 		type: 'string',
 		required: false,
 	},
+	props: {
+		type: 'number',
+		required: false,
+	},
+	hide: {
+		type: 'number',
+		required: false,
+	},
 }
 
 class MenuController extends Controller {

@@ -5,26 +5,23 @@ module.exports = {
 		const { INTEGER, DATE, STRING } = Sequelize
 		await queryInterface.createTable('menus', {
 			id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-			path: {
-				type: STRING,
-				field: '_path',
-			}, // 路径
+			_path: STRING,
 			menu_name: STRING,
-			icon: {
-				type: STRING,
-				field: '_icon',
-			},
-			component: {
-				type: STRING,
-				field: '_component',
-			},
-			pid: {
-				type: INTEGER,
-				field: '_pid',
-			},
+			_icon: STRING,
+			_component: STRING,
+			_pid: INTEGER,
 			role_level: {
 				type: STRING,
 				defaultValue: '[1,2,3]',
+			},
+			_redirect: STRING,
+			_props: { // 是否可以接收参数
+				type: INTEGER,
+				defaultValue: 0,
+			},
+			_hide: { // 菜单是否隐藏
+				type: INTEGER,
+				defaultValue: 0,
 			},
 			created_at: DATE,
 			updated_at: DATE,

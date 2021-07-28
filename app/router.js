@@ -19,6 +19,7 @@ module.exports = app => {
 	router.post('/admin/article/audit/:id', controller.article.audit)
 	router.post('/admin/article/publish/:id', controller.article.publish)
 	router.post('/admin/article/showHome/:id', controller.article.showHome)
+	router.post('/admin/article/toAudit/:id', controller.article.toAudit)
 
 	router.resources('userInfo', '/admin/userInfo', controller.userInfo)
 	router.resources('user', '/admin/user', controller.user)

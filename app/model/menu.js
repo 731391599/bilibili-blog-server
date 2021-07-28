@@ -25,11 +25,18 @@ module.exports = app => {
 			type: STRING,
 			field: '_redirect',
 		},
+        props: {
+			type: INTEGER,
+			field: '_props',
+		},
+        hide: {
+			type: INTEGER,
+			field: '_hide',
+		},
 		roleLevel: STRING,
 		createdAt: DATE,
 		updatedAt: DATE,
 	})
 
-    
 	return Menu
 }
