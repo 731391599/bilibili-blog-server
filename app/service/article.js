@@ -24,7 +24,7 @@ class ArticleService extends Service {
 		}
 		if (query.keywords) {
 			options.where.title = {
-				[sequelize.Op.like]: `%${query.keywords}`,
+				[sequelize.Op.like]: `%${query.keywords}%`,
 			}
 		}
 		if (query.queryStatus) {
@@ -258,19 +258,26 @@ class ArticleService extends Service {
 			return body
 		}
 		let searchId = ''
-		if (query.queryUsername) {
-			const { userId } = await this.ctx.model.UserInfo.findOne({
-				where: {
-					name: {
-						[sequelize.Op.like]: `%${query.queryUsername}`,
+		if (query.key === 'name') {
+			try {
+				const user = await this.ctx.model.UserInfo.findOne({
+					where: {
+						name: {
+							[sequelize.Op.like]: `%${query.keywords}%`,
+						},
 					},
-				},
-			})
-			searchId = userId
+				})
+                console.log(user)
+				if (user) {
+					searchId = user.userId
+				}
+			} catch (e) {
+				console.log(e)
+			}
 		}
-		if (query.keywords) {
+		if (query.key === 'title') {
 			options.where.title = {
-				[sequelize.Op.like]: `%${query.keywords}`,
+				[sequelize.Op.like]: `%${query.keywords}%`,
 			}
 		}
 
@@ -301,23 +308,26 @@ class ArticleService extends Service {
 		try {
 			if (body.status) {
 				body.showHome = 1
-				delete body.status
-				const { status, showHome } = await ctx.model.Article.findOne({
-					where: {
-						id,
-					},
-				})
-				if (showHome === 0 && status === 4) {
-					await ctx.model.Article.update(
-						{ ...body },
-						{
-							where: {
-								id,
-							},
-						}
-					)
-					return 'success'
-				}
+			} else {
+				body.showHome = 0
+			}
+
+			delete body.status
+			const { status } = await ctx.model.Article.findOne({
+				where: {
+					id,
+				},
+			})
+			if (status === 4) {
+				await ctx.model.Article.update(
+					{ ...body },
+					{
+						where: {
+							id,
+						},
+					}
+				)
+				return 'success'
 			}
 			return '文章状态错误'
 		} catch (e) {

@@ -17,7 +17,7 @@ class UserService extends Service {
 		if (query.key) {
 			options.where = {
 				[query.key]: {
-					[sequelize.Op.like]: `%${query.keywords}`,
+					[sequelize.Op.like]: `%${query.keywords}%`,
 				},
 			}
 		}

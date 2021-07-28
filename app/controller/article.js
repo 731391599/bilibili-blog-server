@@ -42,6 +42,11 @@ const allRule = {
 	pageSize: 'string',
 	pageNum: 'string',
 	// 查询标题 模糊查询
+	key: {
+		type: 'enum',
+		values: ['name', 'title'],
+		required: false,
+	},
 	keywords: {
 		type: 'string',
 		required: false,
