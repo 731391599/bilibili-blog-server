@@ -24,16 +24,40 @@ const statusRule = {
 const indexRule = {
 	pageSize: 'string',
 	pageNum: 'string',
-	// // 模糊查询
-	// key: {
-	// 	type: 'enum',
-	// 	values: ['username', 'code', 'status'],
-	// 	required: false,
-	// },
-	// keywords: {
-	// 	type: 'string',
-	// 	required: false,
-	// },
+	// 查询标题 模糊查询
+	keywords: {
+		type: 'string',
+		required: false,
+	},
+	queryStatus: {
+		type: 'string',
+		required: false,
+	},
+	queryCategoryId: {
+		type: 'string',
+		required: false,
+	},
+}
+const allRule = {
+	pageSize: 'string',
+	pageNum: 'string',
+	// 查询标题 模糊查询
+	keywords: {
+		type: 'string',
+		required: false,
+	},
+	queryStatus: {
+		type: 'string',
+		required: false,
+	},
+	queryCategoryId: {
+		type: 'string',
+		required: false,
+	},
+	queryUsername: {
+		type: 'string',
+		required: false,
+	},
 }
 
 class ArticleController extends Controller {
@@ -47,25 +71,6 @@ class ArticleController extends Controller {
 				ctx.request.query
 			)
 			ctx.helper.success(data)
-		} catch (e) {
-			ctx.helper.error(e)
-		}
-	}
-	// 管理员
-	async all() {
-		const { ctx } = this
-		try {
-			const { username } = ctx.decode
-			ctx.validate(indexRule, ctx.request.query)
-			const body = await ctx.service.article.all(
-				username,
-				ctx.request.query
-			)
-			if (body.status === 'success') {
-				ctx.helper.success(body.data)
-			} else {
-				ctx.helper.error(body.status)
-			}
 		} catch (e) {
 			ctx.helper.error(e)
 		}
@@ -90,6 +95,56 @@ class ArticleController extends Controller {
 			ctx.helper.error(e)
 		}
 	}
+
+	async show() {
+		const { ctx } = this
+		const { id } = ctx.params
+		try {
+			const body = await ctx.service.article.show(id)
+			if (body.status === 'success') {
+				ctx.helper.success(body.data)
+			} else {
+				ctx.helper.error(body.data)
+			}
+		} catch (e) {
+			ctx.helper.error(e)
+		}
+	}
+
+	async update() {
+		const { ctx } = this
+		try {
+			const { id } = ctx.params
+			ctx.validate(createRule, ctx.request.body)
+			const status = await ctx.service.article.update(
+				id,
+				ctx.request.body
+			)
+			if (status === 'success') {
+				ctx.helper.success()
+			} else {
+				ctx.helper.error(status)
+			}
+		} catch (e) {
+			ctx.helper.error(e)
+		}
+	}
+
+	async destroy() {
+		const { ctx } = this
+		try {
+			const { id } = ctx.params
+			const status = await ctx.service.article.destroy(id)
+			if (status === 'success') {
+				ctx.helper.success()
+			} else {
+				ctx.helper.error(status)
+			}
+		} catch (e) {
+			ctx.helper.error(e)
+		}
+	}
+
 	// 管理员审核
 	async audit() {
 		const { ctx } = this
@@ -119,6 +174,45 @@ class ArticleController extends Controller {
 			ctx.validate(statusRule, ctx.request.body)
 			const { id } = ctx.params
 			const status = await ctx.service.article.publish(
+				id,
+				ctx.request.body
+			)
+			if (status === 'success') {
+				ctx.helper.success()
+			} else {
+				ctx.helper.error(status)
+			}
+		} catch (e) {
+			ctx.helper.error(e)
+		}
+	}
+
+	// 管理员
+	async all() {
+		const { ctx } = this
+		try {
+			const { username } = ctx.decode
+			ctx.validate(allRule, ctx.request.query)
+			const body = await ctx.service.article.all(
+				username,
+				ctx.request.query
+			)
+			if (body.status === 'success') {
+				ctx.helper.success(body.data)
+			} else {
+				ctx.helper.error(body.status)
+			}
+		} catch (e) {
+			ctx.helper.error(e)
+		}
+	}
+
+	async showHome() {
+		const { ctx } = this
+		try {
+			ctx.validate(statusRule, ctx.request.body)
+			const { id } = ctx.params
+			const status = await ctx.service.article.showHome(
 				id,
 				ctx.request.body
 			)

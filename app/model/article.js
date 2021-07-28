@@ -22,10 +22,21 @@ module.exports = app => {
 			type: INTEGER,
 			field: '_status', // 0 草稿 1 审核中 2 审核通过 3 审核拒绝 4 已发布
 		}, // 状态
-		showHome: INTEGER,// 首页展示
+		showHome: INTEGER, // 首页展示
 		createdAt: DATE,
 		updatedAt: DATE,
 	})
+
+	Article.associate = function () {
+		app.model.Article.belongsTo(app.model.User, {
+			targetKey: 'id',
+			foreignKey: 'userId',
+		})
+        app.model.Article.belongsTo(app.model.Category, {
+			targetKey: 'id',
+			foreignKey: 'categoryId',
+		})
+	}
 
 	return Article
 }
