@@ -5,6 +5,7 @@
  */
 module.exports = app => {
 	const { router, controller } = app
+	// admin接口
 	router.get('/', controller.home.index)
 	router.post('/admin/register', controller.register.index)
 	router.post('/admin/login', controller.login.index)
@@ -26,4 +27,9 @@ module.exports = app => {
 	router.resources('menu', '/admin/menu', controller.menu)
 	router.resources('category', '/admin/category', controller.category)
 	router.resources('article', '/admin/article', controller.article)
+
+	// nuxt前台接口
+	router.get('/api/home/category', controller.web.homeCategory)
+	router.get('/api/home/article', controller.web.homeArticle)
+	router.get('/api/home/user', controller.web.homeUser)
 }

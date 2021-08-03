@@ -28,7 +28,8 @@ module.exports = appInfo => {
 				url.startsWith('/admin/login') ||
 				url.startsWith('/admin/register') ||
 				url.startsWith('/favicon-32x32') ||
-				url.startsWith('/swagger')
+				url.startsWith('/swagger') ||
+				url.startsWith('/api')
 			) {
 				return false
 			} else {

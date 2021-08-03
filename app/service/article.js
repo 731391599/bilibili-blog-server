@@ -267,7 +267,6 @@ class ArticleService extends Service {
 						},
 					},
 				})
-                console.log(user)
 				if (user) {
 					searchId = user.userId
 				}

@@ -32,9 +32,13 @@ module.exports = app => {
 			targetKey: 'id',
 			foreignKey: 'userId',
 		})
-        app.model.Article.belongsTo(app.model.Category, {
+		app.model.Article.belongsTo(app.model.Category, {
 			targetKey: 'id',
 			foreignKey: 'categoryId',
+		})
+		app.model.Article.belongsTo(app.model.UserInfo, {
+			targetKey: 'id',
+			foreignKey: 'userId',
 		})
 	}
 
