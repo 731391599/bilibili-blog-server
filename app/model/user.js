@@ -26,6 +26,7 @@ module.exports = app => {
 	// 表关联
 	// users表中的 userId 对应 userInfos表中的 id
 	User.associate = function () {
+		console.log(app.model.User, 111111)
 		app.model.User.belongsTo(app.model.UserInfo, {
 			targetKey: 'userId',
 			foreignKey: 'id',
@@ -33,5 +34,3 @@ module.exports = app => {
 	}
 	return User
 }
-
-//  如果市 userName 会去表中找 user_name

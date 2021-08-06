@@ -30,6 +30,8 @@ module.exports = app => {
 
 	// nuxt前台接口
 	router.get('/api/home/category', controller.web.homeCategory)
-	router.get('/api/home/article', controller.web.homeArticle)
+	router.post('/api/home/article', controller.web.homeArticle)
 	router.get('/api/home/user', controller.web.homeUser)
+	router.post('/api/article/:id', controller.web.article)
+	router.post('/api/userArticle/:id', controller.web.userArticle)
 }

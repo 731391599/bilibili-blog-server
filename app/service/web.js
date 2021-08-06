@@ -7,10 +7,12 @@ class WebService extends Service {
 		super(ctx)
 	}
 
-	async homeArticle() {
+	async homeArticle(body) {
 		const { ctx } = this
+		const { pageNum } = body
+		const offset = (pageNum - 1) * 6
 		try {
-			const data = await ctx.model.Article.findAll({
+			const data = await ctx.model.Article.findAndCountAll({
 				include: [
 					{
 						model: ctx.model.UserInfo,
@@ -19,11 +21,12 @@ class WebService extends Service {
 						model: ctx.model.Category,
 					},
 				],
-				where: {
-					showHome: 1,
-				},
-				order: [['createdAt', 'DESC']],
+				order: [
+					['showHome', 'DESC'],
+					['createdAt', 'DESC'],
+				],
 				limit: 6,
+				offset,
 			})
 			return {
 				status: 'success',
@@ -83,6 +86,70 @@ class WebService extends Service {
 				data: data,
 			}
 		} catch (e) {
+			return {
+				status: '服务端错误',
+			}
+		}
+	}
+
+	async article(id, body) {
+		const { ctx } = this
+		const { pageNum } = body
+		const offset = (pageNum - 1) * 6
+		try {
+			const data = await ctx.model.Article.findAndCountAll({
+				include: [
+					{
+						model: ctx.model.UserInfo,
+					},
+					{
+						model: ctx.model.Category,
+					},
+				],
+				where: {
+					categoryId: id,
+				},
+				limit: 6,
+				offset,
+			})
+			return {
+				status: 'success',
+				data: data,
+			}
+		} catch (e) {
+			console.log(e)
+			return {
+				status: '服务端错误',
+			}
+		}
+	}
+
+	async userArticle(id, body) {
+		const { ctx } = this
+		const { pageNum } = body
+		const offset = (pageNum - 1) * 6
+		try {
+			const data = await ctx.model.Article.findAndCountAll({
+				include: [
+					{
+						model: ctx.model.UserInfo,
+					},
+					{
+						model: ctx.model.Category,
+					},
+				],
+				where: {
+					userId: id,
+				},
+				limit: 6,
+				offset,
+			})
+			return {
+				status: 'success',
+				data: data,
+			}
+		} catch (e) {
+			console.log(e)
 			return {
 				status: '服务端错误',
 			}
